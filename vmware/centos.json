@@ -1,0 +1,48 @@
+{
+  "variables": {
+    "username": "packer",
+    "password": "packer",
+    "headless": "false",
+    "kickstart": "ks.cfg",
+    "desktop": "false"
+  },
+  "builders": [
+    {
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `kickstart`}}<enter><wait>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": "{{user `disk_size`}}",
+      "memory": "{{user `memory`}}",
+      "cpus": "{{user `cpus`}}",
+      "guest_os_type": "centos-64",
+      "headless": "{{user `headless`}}",
+      "http_directory": "{{user `http_dir`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_url": "{{user `iso_url`}}",
+      "shutdown_command": "echo 'packer' | sudo -S /sbin/halt -h -p",
+      "ssh_username": "{{user `username`}}",
+      "ssh_password": "{{user `password`}}",
+      "ssh_timeout": "60m",
+      "tools_upload_flavor": "linux",
+      "type": "vmware-iso",
+      "vm_name": "{{user `vm_name`}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "environment_vars": [
+        "HOME_DIR=/home/packer",
+        "DESKTOP={{user `desktop`}}"
+      ],
+      "execute_command": "echo 'packer' | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
+      "expect_disconnect": true,
+      "scripts": [
+        "scripts/centos/desktop.sh",
+        "scripts/centos/update.sh"
+      ]
+    }
+  ]
+}
