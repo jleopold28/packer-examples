@@ -5,6 +5,6 @@
 
   tasks:
   - name: create a file called ansible-verify.txt
-    win_file:
-      name: C:/ansible-verify.txt
+    file:
+      name: C:/Windows/Temp/ansible-verify.txt
       state: touch 

@@ -1,7 +1,7 @@
 {
     "variables": {
-      "username": "packer",
-      "password": "packer",
+      "username": "vagrant",
+      "password": "vagrant",
       "vmx_path": "../output-windows2012_r2-vmware/windows2012_r2.vmx",
       "vm_name": "windows2012_ansible"
     },
@@ -9,9 +9,12 @@
       {
         "type": "vmware-vmx",
         "vm_name": "{{ user `vm_name`}}",
+        "communicator": "winrm",
         "source_path": "{{ user `vmx_path`}}",
-        "ssh_username": "{{user `username`}}",
-        "ssh_password": "{{user `password`}}",
+        "winrm_username": "{{user `username`}}",
+        "winrm_password": "{{user `password`}}",
+        "winrm_use_ssl": true,
+        "winrm_insecure": true,
         "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
         "vmx_data": {
           "displayname": "{{ user `vm_name`}}"
@@ -22,7 +25,11 @@
     "provisioners": [
       {
         "type": "ansible",
-        "playbook_file": "../../ansible/win_setup.yml"
+        "playbook_file": "../../ansible/win_setup.yml",
+        "extra_arguments": [
+            "--connection", "packer", "-vvv",
+            "--extra-vars", "ansible_shell_type=powershell ansible_shell_executable=None"
+        ]
       }
     ]
   }
