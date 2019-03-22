@@ -3,7 +3,7 @@
     "username": "packer",
     "password": "packer",
     "vmx_path": "../output-ubuntu1604-server-vmware/ubuntu1604-server.vmx",
-    "vm_name": "ubuntu1604-webserver"
+    "vm_name": "webserver"
   },
   "builders": [
     {
@@ -14,7 +14,7 @@
       "ssh_password": "{{user `password`}}",
       "shutdown_command": "echo 'packer' | sudo -S /sbin/halt -h -p" ,
       "vmx_data": {
-        "displayname": "{{ user `vm_name`}}",
+        "displayname": "{{ user `vm_name`}}"
       },
       "output_directory": "output-{{user `vm_name`}}-vmware"
     }

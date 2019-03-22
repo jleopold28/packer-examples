@@ -62,7 +62,8 @@
         "scripts/ubuntu/sshd.sh",
         "scripts/ubuntu/sudoers.sh",
         "scripts/ubuntu/desktop.sh",
-        "scripts/ubuntu/vmware.sh"
+        "scripts/ubuntu/vmware.sh",
+        "scripts/ubuntu/cleanup.sh"
       ],
       "type": "shell"
     }
