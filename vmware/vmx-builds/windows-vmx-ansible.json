@@ -1,0 +1,28 @@
+{
+    "variables": {
+      "username": "packer",
+      "password": "packer",
+      "vmx_path": "../output-windows2012_r2-vmware/windows2012_r2.vmx",
+      "vm_name": "windows2012_ansible"
+    },
+    "builders": [
+      {
+        "type": "vmware-vmx",
+        "vm_name": "{{ user `vm_name`}}",
+        "source_path": "{{ user `vmx_path`}}",
+        "ssh_username": "{{user `username`}}",
+        "ssh_password": "{{user `password`}}",
+        "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+        "vmx_data": {
+          "displayname": "{{ user `vm_name`}}"
+        },
+        "output_directory": "output-{{user `vm_name`}}"
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "ansible",
+        "playbook_file": "../../ansible/win_setup.yml"
+      }
+    ]
+  }

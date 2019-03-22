@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: create a file called ansible-verify.txt
+    win_file:
+      name: C:/ansible-verify.txt
+      state: touch 
