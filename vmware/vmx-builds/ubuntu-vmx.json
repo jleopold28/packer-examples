@@ -1,0 +1,28 @@
+{
+  "variables": {
+    "username": "packer",
+    "password": "packer",
+    "vmx_path": "../output-ubuntu1604-server-vmware/ubuntu1604-server.vmx",
+    "vm_name": "ubuntu1604-webserver"
+  },
+  "builders": [
+    {
+      "type": "vmware-vmx",
+      "vm_name": "{{ user `vm_name`}}",
+      "source_path": "{{ user `vmx_path`}}",
+      "ssh_username": "{{user `username`}}",
+      "ssh_password": "{{user `password`}}",
+      "shutdown_command": "echo 'packer' | sudo -S /sbin/halt -h -p" ,
+      "vmx_data": {
+        "displayname": "{{ user `vm_name`}}",
+      },
+      "output_directory": "output-{{user `vm_name`}}-vmware"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "../../ansible/web.yml"
+    }
+  ]
+}

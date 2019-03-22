@@ -1,0 +1,33 @@
+{
+  "variables": {
+    "username": "packer",
+    "password": "packer",
+    "vmx_path": "../output-vmware-iso/centos7-vmware.vmx"
+  },
+  "builders": [
+    {
+      "type": "vmware-vmx",
+      "vm_name": "centos7-usingVMX",
+      "source_path": "{{ user `vmx_path`}}",
+      "ssh_username": "{{user `username`}}",
+      "ssh_password": "{{user `password`}}",
+      "shutdown_command": "echo 'packer' | sudo -S /sbin/halt -h -p" ,
+      "vmx_data": {
+        "displayname": "centos7-usingVMX"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "environment_vars": [
+        "HOME_DIR=/home/packer"
+      ],
+      "execute_command": "echo 'packer' | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
+      "expect_disconnect": true,
+      "scripts": [
+        "../scripts/vmware-tools.sh"
+      ]
+    }
+  ]
+}

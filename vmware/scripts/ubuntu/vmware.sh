@@ -1,4 +1,3 @@
 #!/bin/sh -eux
-apt-get install -y open-vm-tools;
-mkdir /mnt/hgfs;
-echo "platform specific vmware.sh executed";
+apt-get install -y open-vm-tools-desktop;  # changes from open-vm-tools
+reboot
