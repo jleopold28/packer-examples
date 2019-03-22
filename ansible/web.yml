@@ -5,7 +5,7 @@
 
   tasks:
   - name: latest apache2 installed
-    yum:
+    apt:
       name: apache2	
       state: latest
   - name: create index.html file
