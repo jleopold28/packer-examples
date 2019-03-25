@@ -26,7 +26,6 @@
       {
         "type": "ansible",
         "playbook_file": "../../ansible/win_setup.yml",
-        "user": "vagrant",
         "extra_arguments": [
             "--connection", "packer", "-vvv",
             "--extra-vars", "ansible_shell_type=powershell ansible_shell_executable=None"
